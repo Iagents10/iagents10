@@ -1,6 +1,6 @@
 **Relatorio laboratorio Seabra**
 
-Exemplo 1
+# Lab 1
 
 CENÁRIO
 Uma equipe de pesquisadores está desenvolvendo um estudo sobre o uso de agentes de IA autônomos em ambientes corporativos, buscando entender como diferentes arquiteturas (baseadas em LLMs) afetam a tomada de decisão, coordenação de tarefas e confiabilidade em processos críticos. Eles precisam de resumos analíticos que ajudem a mapear as principais abordagens, frameworks existentes e limitações atuais para alimentar um artigo científico.
@@ -108,4 +108,76 @@ Um framework recente que permite criar equipes de agentes com papéis distintos,
 * **IA Autônoma Ética**: Questões como viés, discriminação algorítmica e transparência precisam ser endereçadas com seriedade.
 
 ---
+# Lab 2
+
+CENÁRIO
+Você atua como analista de dados em um centro de inteligência financeira. Precisa construir
+um prompt que utilize a capacidade de mecanismo de busca dos LLMs conectados à internet para
+visitar a página https://www.globo.com/ e trazer no máximo 5 notícias relevantes sobre
+economia, com foco no impacto para o Brasil ou para o cenário internacional.
+DESAFIO
+Utilizando as técnicas de engenharia de prompt avançada, crie um comando que:
+Busque notícias atuais relacionadas à política brasileira ou internacional no documento apensado
+extraído do site da Globo, obtido no portal https://www.globo.com/.
+Limite-se a no máximo 5 notícias.
+Para cada notícia encontrada: Identifique se é nacional ou internacional, analise o sentimento da
+notícia (positivo ou negativo) e apresente as informações no formato estruturado abaixo.
+[ Título da Notícia ]
+Tipo de Notícia : [Nacional ou Internacional]
+Análise de sentimento da notícia : [Boa notícia para o país ou Péssima notícia para o país]
+
+### Prompt gerado:
+
+Aqui está um prompt avançado de engenharia de instruções, ideal para ser usado com LLMs conectados à internet (como agentes com acesso ao web tool) em um contexto de análise de inteligência financeira. Esse prompt estrutura de forma precisa o que o modelo deve buscar, como deve interpretar e como deve apresentar os resultados:
+
+PROMPT AVANÇADO PARA AGENTE LLM COM ACESSO À INTERNET
+
+Você atua como analista de dados de um centro de inteligência financeira. Acesse o site https://www.globo.com/ e identifique no máximo 5 notícias atuais sobre economia, com foco no impacto para o Brasil ou para o cenário internacional.
+A partir das notícias encontradas, faça o seguinte:
+    1. Classifique cada notícia como Nacional (se trata de economia brasileira) ou Internacional (se trata de economia mundial que impacta o Brasil).
+    2. Faça uma análise de sentimento da notícia, determinando se ela representa uma Boa notícia para o país ou uma Péssima notícia para o país (com base no conteúdo econômico e impacto financeiro).
+    3. Apresente as informações de forma estruturada como no exemplo abaixo:
+
+[Título da Notícia]
+Tipo de Notícia: [Nacional ou Internacional]
+Análise de sentimento da notícia: [Boa notícia para o país ou Péssima notícia para o país]
+
+Regras adicionais:
+    • As notícias devem ser atuais (últimos 2 dias).
+    • Elimine matérias duplicadas ou de caráter apenas opinativo sem base factual.
+    • Priorize temas como: inflação, juros, dólar, commodities, mercado financeiro, decisões do Banco Central, política fiscal, acordos comerciais internacionais, crises globais que afetam o Brasil, etc.
+    • Responda apenas com o conteúdo estruturado solicitado.
+
+Se quiser, posso usar esse prompt agora para buscar as notícias diretamente. Deseja que eu execute?
+
+### Execução do prompt gerado
+
+Com base nas informações disponíveis, aqui estão as cinco notícias econômicas mais relevantes, com foco no impacto para o Brasil ou no cenário internacional:
+
+Economia brasileira cresce 1,3% no primeiro trimestre, mostra indicador do BC
+Tipo de Notícia: Nacional
+Análise de sentimento da notícia: Boa notícia para o país
+A economia brasileira registrou crescimento de 1,3% no primeiro trimestre de 2025 em relação ao trimestre anterior, conforme o Índice de Atividade Econômica do Banco Central (IBC-Br). Em comparação com o mesmo período de 2024, o crescimento foi de 3,7%. (O GLOBO)
+
+Política comercial dos EUA alimenta incertezas sobre a economia global, diz Copom
+Tipo de Notícia: Internacional
+Análise de sentimento da notícia: Péssima notícia para o país
+O Comitê de Política Monetária (Copom) do Banco Central destacou que a política comercial dos Estados Unidos está gerando incertezas na economia global, afetando negativamente os mercados emergentes, incluindo o Brasil. (Valor Econômico)
+
+Economia global caminha para recessão, diz agência da ONU
+Tipo de Notícia: Internacional
+Análise de sentimento da notícia: Péssima notícia para o país
+Segundo relatório de uma agência da ONU, o crescimento global deve desacelerar para 2,3% em 2025, colocando a economia mundial no caminho para uma recessão, o que pode impactar negativamente o Brasil. (O GLOBO)
+
+Ibovespa sobe após corte no orçamento e recuo do governo sobre alta do IOF; dólar cai
+Tipo de Notícia: Nacional
+Análise de sentimento da notícia: Boa notícia para o país
+O índice da Bolsa de Valores (Ibovespa) fechou em alta de 0,26%, aos 137.623 pontos, enquanto o dólar comercial caiu 0,27%, valendo R$ 5,65, refletindo positivamente no mercado financeiro brasileiro. (cbn)
+
+Economia global é resiliente a choques, mas há risco protecionista, diz Tatiana Rosito
+Tipo de Notícia: Internacional
+Análise de sentimento da notícia: Péssima notícia para o país
+Tatiana Rosito alertou que, apesar da resiliência da economia global a choques, há riscos associados ao protecionismo, o que pode prejudicar investimentos e afetar negativamente países como o Brasil. (Valor Econômico)
+
+
 
