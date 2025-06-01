@@ -2,7 +2,7 @@
 • Nome do Grupo: IAgents10 
 
 • Integrantes do Grupo: Alexsandro, 
-Renato, Leandro, João Paulo 
+Renato, Leandro, João Paulo, Rivka, Daniel
 
 • Descrição do Tema Escolhido (o que se pretende fazer): O tema é sobre extração de dados, aplicado automatizar o processamento e análise de documentos fiscais 
 
