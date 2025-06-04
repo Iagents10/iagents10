@@ -2,7 +2,7 @@
 
 ## Grupo: IAgents10
 
-**Integrantes:** Alexsandro, Renato, Leandro, João Paulo, Rivka e Daniel 
+**Integrantes:** Alexsandro, Leandro
 
 ## Introdução
 
