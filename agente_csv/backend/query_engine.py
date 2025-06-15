@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
 
-llm = ChatOpenAI(openai_api_key=os.getenv("OPENROUTER_API_KEY"), temperature=0.1)
+llm = ChatOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    model="openai/gpt-3.5-turbo",
+    temperature=0
+)
 
 def run_query(question, dataframe):
     context = dataframe.head(100).to_csv(index=False)

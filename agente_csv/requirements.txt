@@ -8,3 +8,4 @@ tqdm
 streamlit
 langchain
 tiktoken
+langchain-community

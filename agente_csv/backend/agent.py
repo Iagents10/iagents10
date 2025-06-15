@@ -1,6 +1,8 @@
 from .utils import unzip_files
 from .data_loader import load_csv_data
 from .query_engine import run_query
+from dotenv import load_dotenv
+load_dotenv()
 
 def process_question(zip_path, question):
     csv_files = unzip_files(zip_path)
