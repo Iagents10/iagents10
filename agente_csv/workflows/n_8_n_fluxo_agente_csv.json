@@ -1,0 +1,77 @@
+{
+  "name": "AgenteCSV Pergunta via Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "pergunta-csv",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook Pergunta",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "command": "python3",
+        "parameters": [
+          "agente_csv/web/api.py",
+          "--question",
+          "={{$json[\"pergunta\"]}}",
+          "--zip_path",
+          "/home/alexsandro/agente_csv_project/iagents10/temp_n8n.zip"
+        ]
+      },
+      "id": "2",
+      "name": "Executa Script Agente",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "options": {},
+        "responseData": "={{$node[\"Executa Script Agente\"].json[\"stdout\"]}}"
+      },
+      "id": "3",
+      "name": "Resposta",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [750, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Pergunta": {
+      "main": [
+        [
+          {
+            "node": "Executa Script Agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executa Script Agente": {
+      "main": [
+        [
+          {
+            "node": "Resposta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "agente-csv-webhook",
+  "tags": [
+    {
+      "id": "agente",
+      "name": "AgenteCSV"
+    }
+  ]
+}
