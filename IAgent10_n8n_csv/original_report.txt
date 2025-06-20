@@ -1,0 +1,117 @@
+Relatório do Projeto: Agente de Consulta a Arquivos
+CSV
+1. Framework Escolhida
+Para este projeto, foi escolhido o n8n como framework principal para orquestração do fluxo de
+trabalho. O n8n é uma ferramenta de automação de fluxo de trabalho baseada em nós que
+permite conectar diferentes serviços e APIs sem necessidade de codificação complexa.
+Justificativa da escolha:
+-
+
+Interface visual intuitiva para criação de fluxos de trabalho
+Suporte nativo a webhooks para criação de endpoints HTTP
+Capacidade de executar scripts Python diretamente
+Facilidade de implantação e manutenção
+Código aberto e extensível
+
+Além do n8n, o projeto utiliza Python com a biblioteca pandas para processamento e análise
+dos dados CSV, aproveitando sua eficiência no tratamento de grandes conjuntos de dados
+tabulares.
+
+2. Estrutura da Solução
+A solução foi estruturada em duas partes principais:
+
+2.1. Script Python (query_agent.py)
+O script Python é responsável por:
+1. Extração de dados: Descompactar o arquivo ZIP contendo os CSVs (se necessário)
+2. Carregamento de dados: Ler os arquivos CSV em DataFrames pandas, com
+tratamento adequado para datas e valores numéricos
+3. Análise de perguntas: Interpretar a pergunta do usuário usando expressões regulares
+4. Consulta de dados: Executar a consulta apropriada nos DataFrames
+5. Formatação de resposta: Retornar a resposta formatada de maneira amigável
+O script foi projetado para lidar com três tipos principais de consultas:
+-
+
+Fornecedor com maior montante recebido
+Item com maior volume entregue
+Valor total das notas fiscais
+
+2.2. Fluxo n8n (n8n_workflow.json)
+O fluxo n8n implementa uma API REST simples com três nós:
+1. Webhook: Recebe requisições HTTP POST com a pergunta do usuário
+2. Executar Script Python: Chama o script Python passando a pergunta como argumento
+3. Responder ao Webhook: Retorna a resposta do script como JSON
+Este fluxo permite que o usuário interaja com o agente através de requisições HTTP, sem
+necessidade de acesso direto ao ambiente Python ou aos arquivos CSV.
+
+2.3. Diagrama de Funcionamento
+[Usuário] --pergunta--> [Webhook n8n] --executa--> [Script Python] --consulta--> [Arquivos
+CSV]
+|
+[Usuário] <--resposta-- [Webhook n8n] <--resultado---- [Script Python]
+
+3. Perguntas e Respostas
+Foram realizados testes com quatro perguntas diferentes para validar o funcionamento do
+agente:
+
+Pergunta 1: Qual é o fornecedor que teve maior montante recebido?
+Resposta: O fornecedor com maior montante recebido é 'CHEMYUNION LTDA' com um total
+de R$ 1292418.75.
+
+Pergunta 2: Qual item teve maior volume entregue em quantidade?
+Resposta: O item com maior volume entregue é 'DIPIFARMA INJETAVEL(DIPIRONA
+MONOIDR 500MG/ML) 2ML' com uma quantidade total de 51000.0 UNIDAD.
+
+Pergunta 3: Qual o valor total das notas fiscais?
+Resposta: O valor total de todas as notas fiscais é R$ 3371754.84.
+
+Pergunta 4: Quais são os produtos mais caros?
+Resposta: Desculpe, não consegui entender a sua pergunta. Por favor, tente reformular.
+Exemplos: 'Qual o fornecedor com maior montante?' ou 'Qual item teve maior quantidade?'
+Nota: A quarta pergunta demonstra uma limitação do agente, que só consegue interpretar
+perguntas específicas para as quais foi programado.
+
+4. Link para o Repositório GitHub
+O código-fonte completo do projeto está disponível no seguinte repositório:
+https://github.com/Iagents10/iagents10
+O repositório contém:
+-
+
+query_agent.py: Script Python para processamento das consultas
+n8n_workflow.json: Fluxo n8n exportado para importação
+
+-
+
+README.md: Instruções detalhadas de instalação e uso
+
+-
+
+fluxo_n8n_documentacao.md: Documentação técnica do fluxo n8n
+Arquivos de exemplo para teste
+
+5. Limitações e Possíveis Melhorias
+Limitações Atuais:
+-
+
+Suporte limitado a apenas alguns tipos específicos de perguntas
+Uso de expressões regulares para interpretação de perguntas, o que reduz a
+flexibilidade
+Sem capacidade de aprendizado ou adaptação a novos tipos de consultas
+
+Possíveis Melhorias:
+-
+
+Integração com um Modelo de Linguagem Grande (LLM) para interpretação mais
+flexível de perguntas
+Adição de suporte a mais tipos de consultas e análises
+Implementação de visualizações gráficas para resultados
+Criação de uma interface web dedicada para interação com o agente
+
+6. Conclusão
+O projeto implementa com sucesso um agente capaz de consultar dados de arquivos CSV
+através de uma API REST orquestrada pelo n8n. A solução atende aos requisitos básicos de
+permitir consultas em linguagem natural (ainda que limitadas) sobre os dados de notas fiscais,
+demonstrando a viabilidade da abordagem.
+A combinação de n8n para orquestração e Python/pandas para processamento de dados
+mostrou-se eficiente e flexível, permitindo uma implementação rápida e manutenível.
+
+

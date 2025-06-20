@@ -1,30 +1,46 @@
 import os
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.chat_models import ChatOpenAI
+from langchain_core.documents import Document
 
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '.env'))
+load_dotenv()  # Carrega as variáveis de ambiente
 
+# Pegando a chave da OpenAI direto do .env
+openai_key = os.getenv("OPENAI_API_KEY")
+
+# Configura o modelo LLM usando a API oficial da OpenAI
 llm = ChatOpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    model="openai/gpt-3.5-turbo",
-    temperature=0
+    openai_api_key=openai_key,
+    model="gpt-3.5-turbo"
 )
 
-def run_query(question, dataframe):
-    context = dataframe.head(100).to_csv(index=False)
-    prompt = PromptTemplate(
-        input_variables=["context", "question"],
-        template="""
-Você é um analista de dados. Com base nos dados abaixo (em CSV), responda com clareza a pergunta do usuário.
+# Configura os embeddings da OpenAI
+embeddings = OpenAIEmbeddings(
+    openai_api_key=openai_key
+)
 
-Dados:
-{context}
+def run_query(question, documents):
+    # Garante que documentos são instâncias de Document
+    docs = [Document(page_content=text) if isinstance(text, str) else text for text in documents]
 
-Pergunta:
-{question}
-        """,
+    texts = [doc.page_content for doc in docs]
+    metadatas = [doc.metadata if hasattr(doc, "metadata") else {} for doc in docs]
+
+    # Indexa os documentos
+    vectorstore = FAISS.from_texts(texts, embeddings, metadatas=metadatas)
+
+    # Recupera os mais relevantes
+    relevant_docs = vectorstore.similarity_search(question, k=4)
+    context = "\n\n".join([doc.page_content for doc in relevant_docs])
+
+    prompt = (
+        "Você é um assistente que responde perguntas com base nos dados fornecidos.\n\n"
+        "Contexto:\n{context}\n\n"
+        "Pergunta: {question}\n"
+        "Resposta:"
     )
+
     response = llm.predict(prompt.format(context=context, question=question))
-    return response.strip()
+    return response

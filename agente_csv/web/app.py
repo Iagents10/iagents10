@@ -1,17 +1,34 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import streamlit as st
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from backend.agent import process_question
 
-st.title("Agente CSV com LLM 🤖")
+import streamlit as st
+import tempfile
+from dotenv import load_dotenv
 
-uploaded_file = st.file_uploader("Faça upload de um arquivo .zip contendo CSVs", type="zip")
+# Carrega variáveis do .env
+load_dotenv()
+
+st.set_page_config(page_title="Agente CSV com LLM 🤖")
+st.title("Agente CSV com LLM 🤖")
+st.write("Faça upload de um arquivo `.zip` contendo arquivos CSV e pergunte algo sobre os dados.")
+
+uploaded_file = st.file_uploader("Upload do arquivo ZIP", type="zip")
+
 question = st.text_input("Digite sua pergunta sobre os dados")
 
-if uploaded_file and question:
-    with open("temp.zip", "wb") as f:
-        f.write(uploaded_file.read())
-    resposta = process_question("temp.zip", question)
-    st.markdown("### Resposta:")
-    st.write(resposta)
+if uploaded_file is not None and question:
+    with st.spinner("Processando..."):
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".zip") as temp_file:
+            temp_file.write(uploaded_file.read())
+            temp_file_path = temp_file.name
+
+        try:
+            resposta = process_question(temp_file_path, question)
+            st.success("Resposta:")
+            st.write(resposta)
+        except Exception as e:
+            st.error(f"Erro ao processar: {e}")
+        finally:
+            os.remove(temp_file_path)
