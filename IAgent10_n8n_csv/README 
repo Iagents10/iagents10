@@ -27,7 +27,7 @@ https://github.com/Iagents10/iagents10/IAgent10_n8n_csv
 IAgent10_n8n_csv/
 ├── README.md
 ├── workflow/
-│   └── desafio_2_copy.json   # Fluxo n8n completo exportado
+│   └── AIgent10_n8n.json   # Fluxo n8n completo exportado
 ├── streamlit_app/
 │   ├── app.py                # Interface web para perguntas
 │   └── requirements.txt      # Dependências do Streamlit
