@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+.env.*
+venv/
+.agente_csv_env/
+
+# VSCode
+.vscode/
+
+# Streamlit
+.streamlit/
+
+# Dados temporários
+*.zip
+*.csv
+*.xls*
+
