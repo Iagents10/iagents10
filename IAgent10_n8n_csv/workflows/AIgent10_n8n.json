@@ -112,13 +112,15 @@
     },
     {
       "parameters": {
+        "promptType": "define",
+        "text": "=Você é um agente de dados conectado a um banco PostgreSQL que contém uma tabela chamada `nota_fiscal`. Essa tabela armazena informações sobre notas fiscais, como ID, CHAVE DE ACESSO, MODELO, SÉRIE, NÚMERO e outras colunas relevantes. Responda às perguntas com base nos dados da tabela `nota_fiscal`. Use linguagem simples e objetiva.\nSe a resposta depender de uma consulta ao banco, utilize a ferramenta Postgres conectada \n{{ $json.chatInput }}\n",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        700,
-        340
+        820,
+        300
       ],
       "id": "f42acfd4-1795-431c-8251-9d3507ddba24",
       "name": "AI Agent"
@@ -127,24 +129,24 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-3.5-turbo",
+          "value": "meta-llama/llama-3-70b-instruct",
           "mode": "list",
-          "cachedResultName": "gpt-3.5-turbo"
+          "cachedResultName": "meta-llama/llama-3-70b-instruct"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        640,
-        520
+        620,
+        640
       ],
       "id": "2d332521-9103-47b0-9575-9b21832217c4",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "jghWOiJXGZGr09lm",
-          "name": "OpenAi account"
+          "id": "jdC2Aaw03X18r5TQ",
+          "name": "Openrouter account "
         }
       }
     },
@@ -153,8 +155,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        800,
-        560
+        860,
+        620
       ],
       "id": "581904f0-d334-4903-96f0-f56e0288233c",
       "name": "Simple Memory"
@@ -163,14 +165,14 @@
       "parameters": {
         "toolDescription": "use para atualizar as notas fiscais",
         "method": "POST",
-        "url": "https://criadordigital-n8n-webhook.k2yvth.easypanel.host/webhook/atualiza",
+        "url": "={{ $fromAI('URL', ``, 'string') }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        940,
-        560
+        1060,
+        620
       ],
       "id": "3e3dd303-ebdf-4e1d-8b9a-65b49b94c0e6",
       "name": "HTTP Request"
@@ -211,8 +213,8 @@
       "type": "n8n-nodes-base.postgresTool",
       "typeVersion": 2.6,
       "position": [
-        1100,
-        540
+        1260,
+        500
       ],
       "id": "8ad9fb5f-7ce2-4d50-8085-50c0ef686b50",
       "name": "Postgres",
@@ -551,7 +553,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "bc7a4701-7c59-487c-a875-0f7459dd3bfa",
+  "versionId": "85242fe6-4995-419f-9e38-61d04af02149",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4c438162e431d9082db11835e5b1da0d12ac86a7545603e9def8efac0d2d5425"
